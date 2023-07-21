@@ -38,7 +38,7 @@ const router = createRouter({
 const whiteList = ['/login', '/404', '/401'] // no redirect whitelist
 router.beforeEach((to, from, next) => {
 
-    let hasToken = getCookie('token')
+    let hasToken = true;//todo
     //todo
 
     if (hasToken) {
