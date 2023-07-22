@@ -39,10 +39,10 @@ const rules = ref({
         <div class="login-inner">
             <el-form :model="form" :rules="rules" ref="loginForm" label-width="80px">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="form.username"></el-input>
+                    <el-input v-model="form.username" @keydown.enter="handleClickLogin"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="form.password"></el-input>
+                    <el-input v-model="form.password" @keydown.enter="handleClickLogin"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="handleClickLogin">登录</el-button>
@@ -56,7 +56,7 @@ const rules = ref({
 <style lang="less" scoped>
 
 .login-box {
-  width: 100vh;
+  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
