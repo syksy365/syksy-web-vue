@@ -3,7 +3,7 @@ import {ElNotification, ElMessageBox, ElMessage, ElLoading} from 'element-plus'
 
 const request = axios.create({
     baseURL: "/api",
-    timeout: 100,
+    timeout: 1000,
 });
 
 const requestMap = new Map();

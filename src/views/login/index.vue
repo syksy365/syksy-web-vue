@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {login} from "@/api/user";
 import {reactive, ref} from "vue";
+import {useUserStore} from "@/stores/user";
+import {useRouter} from "vue-router";
 
 const form = reactive({
     username: '',
@@ -9,11 +10,18 @@ const form = reactive({
 
 const loginForm = ref(null)
 
+const userStore = useUserStore()
+const router = useRouter()
+
 const handleClickLogin = () => {
     loginForm.value.validate().then(() => {
-        login(form).then(res => {
-            //登录
+        userStore.storeLogin(form).then(() => {
+            console.log('success submit!!')
+        }).catch(() => {
+            console.log('error submit!!')
+            return false
         })
+
     }).catch(() => {
         console.log('error submit!!')
         return false
