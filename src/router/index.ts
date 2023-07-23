@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import layout from "@/layout/index.vue";
-import {getCookie} from "@/utils";
-import cookie from "cookiejs";
+import {useUserStore} from "@/stores/user";
 
 
 const router = createRouter({
@@ -33,20 +32,48 @@ const router = createRouter({
     ]
 })
 
-
-//路由守卫
+//白名单
 const whiteList = ['/login', '/404', '/401'] // no redirect whitelist
-router.beforeEach((to, from, next) => {
 
-    if (whiteList.includes(to.path)) {
+router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
+
+    //如果没有登录
+    if (!userStore.haveLogin) {
+        //如果去白名单就不拉去用户信息了
+        if (whiteList.includes(to.path)) {
+            //单独处理进入登录界面的
+            if (to.path === '/login') {
+                userStore.storeGetUserInfo().then(() => {
+                    //如果已经登录了就跳转到主界面
+                    next('/');
+                    return;
+                }).catch(() => {
+                    next()
+                    return;
+                })
+                return;//终止这个if
+            }
+            next()
+            return;
+        } else {
+            //拉取用户信息
+            userStore.storeGetUserInfo().then(() => {
+                next();
+                return
+            }).catch(() => {
+                next(`/login?redirect=${to.path}`)
+            })
+        }
+    } else {
+        //如果已经登录
+        if (to.path === '/login') {
+            next({path: '/'});
+            return;
+        }
         next();
         return;
     }
-
-
-
-
-    next();
 
 
 })

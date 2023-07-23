@@ -2,6 +2,8 @@
 import {reactive, ref} from "vue";
 import {useUserStore} from "@/stores/user";
 import {useRouter} from "vue-router";
+import {ElNotification} from "element-plus";
+import {getAllUrlParams} from "@/utils";
 
 const form = reactive({
     username: '',
@@ -15,15 +17,37 @@ const router = useRouter()
 
 const handleClickLogin = () => {
     loginForm.value.validate().then(() => {
-        userStore.storeLogin(form).then(() => {
-            console.log('success submit!!')
+        userStore.storeLogin(form).then((res) => {
+            // 登录成功
+            if (res.status === 'ok') {
+                if (getAllUrlParams().redirect) {
+                    router.push(getAllUrlParams().redirect)
+                } else {
+                    router.push('/')
+                }
+                // 登录失败
+            } else if (res.status === 'error') {
+                ElNotification({
+                    title: '登录出了问题',
+                    message: res.message,
+                    type: 'error'
+                })
+            }
         }).catch(() => {
-            console.log('error submit!!')
+            ElNotification({
+                title: '登录出了问题',
+                message: '登录失败,请检查网络',
+                type: 'error'
+            })
             return false
         })
 
     }).catch(() => {
-        console.log('error submit!!')
+        ElNotification({
+            title: '请填写完整',
+            message: '请检查输入',
+            type: 'error'
+        })
         return false
     })
 }
@@ -50,7 +74,7 @@ const rules = ref({
                     <el-input v-model="form.username" @keydown.enter="handleClickLogin"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="form.password" @keydown.enter="handleClickLogin"></el-input>
+                    <el-input show-password v-model="form.password" @keydown.enter="handleClickLogin"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="handleClickLogin">登录</el-button>
