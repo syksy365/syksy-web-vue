@@ -36,7 +36,8 @@ request.interceptors.response.use((response) => {
         }
     },
     (error) => {
-        if (error.response.status === 401) {
+        if (error.response.status === 401
+            && window.location.href.indexOf("/login") === -1) {
             ElNotification({
                 title: '系统提示',
                 message: '登录已过期，请重新登录',

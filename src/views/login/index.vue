@@ -57,7 +57,7 @@ const url = ref<any>(null)
 
 const captcha = () => {
     getCaptcha().then((res) => {
-        let blob = new Blob([res.data], {type: 'image/png'})
+        let blob = new Blob([res], {type: 'image/png'})
         url.value = URL.createObjectURL(blob)
     })
 }

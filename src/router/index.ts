@@ -44,14 +44,15 @@ router.beforeEach((to, from, next) => {
         if (whiteList.includes(to.path)) {
             //单独处理进入登录界面的
             if (to.path === '/login') {
-                userStore.storeGetUserInfo().then(() => {
-                    //如果已经登录了就跳转到主界面
-                    next('/');
-                    return;
-                }).catch(() => {
-                    next()
-                    return;
-                })
+                // userStore.storeGetUserInfo().then(() => {
+                //     //如果已经登录了就跳转到主界面
+                //     next('/');
+                //     return;
+                // }).catch(() => {
+                //     next()
+                //     return;
+                // })
+                next();
                 return;//终止这个if
             }
             next()
