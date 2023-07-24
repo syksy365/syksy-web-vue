@@ -4,6 +4,7 @@ import {useUserStore} from "@/stores/user";
 import {useRouter} from "vue-router";
 import {ElNotification} from "element-plus";
 import {getAllUrlParams} from "@/utils";
+import {getCaptcha} from "@/api/user";
 
 const form = reactive({
     username: '',
@@ -52,6 +53,17 @@ const handleClickLogin = () => {
     })
 }
 
+const url = ref<any>(null)
+
+const captcha = () => {
+    getCaptcha().then((res) => {
+        let blob = new Blob([res.data], {type: 'image/png'})
+        url.value = URL.createObjectURL(blob)
+    })
+}
+
+captcha()
+
 const rules = ref({
     username: [
         {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -76,6 +88,7 @@ const rules = ref({
                 <el-form-item label="密码" prop="password">
                     <el-input show-password v-model="form.password" @keydown.enter="handleClickLogin"></el-input>
                 </el-form-item>
+                <img :src="url">
                 <el-form-item>
                     <el-button type="primary" @click="handleClickLogin">登录</el-button>
                 </el-form-item>

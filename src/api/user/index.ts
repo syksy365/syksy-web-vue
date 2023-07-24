@@ -17,8 +17,18 @@ const getUserInfo = (): any => {
     })
 }
 
+//获取验证码
+const getCaptcha = (): any => {
+    return request({
+        url: "/captcha",
+        method: "get",
+        responseType: "blob",
+    })
+}
+
 
 export {
     login,
     getUserInfo,
+    getCaptcha,
 }
