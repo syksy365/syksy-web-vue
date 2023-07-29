@@ -1,6 +1,6 @@
-import {defineStore} from "pinia";
-import {ref} from "vue";
-import {getUserInfo, login} from "@/api/user";
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { getUserInfo, login } from '@/api/user'
 
 export const useUserStore = defineStore('user', () => {
     /**
@@ -28,21 +28,23 @@ export const useUserStore = defineStore('user', () => {
     const info = ref({})
     const haveLogin = ref(false)
 
-    //登录
+    // 登录
     const storeLogin = (data: any): any => {
         return login(data).then((res: any) => {
             return Promise.resolve(res)
         })
     }
 
-    //获取用户信息
+    // 获取用户信息
     const storeGetUserInfo = (): any => {
         return getUserInfo().then((res: any) => {
             if (res.success) {
                 info.value = res.data
                 haveLogin.value = true
                 return Promise.resolve()
-            } else {
+            }
+            else {
+                // eslint-disable-next-line prefer-promise-reject-errors
                 return Promise.reject()
             }
         })
