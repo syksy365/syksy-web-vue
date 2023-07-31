@@ -1,10 +1,10 @@
-import cookie from "cookiejs";
+import cookie from 'cookiejs'
 
-const getCookie = (name: string) => {
+function getCookie(name: string) {
     return cookie.get(name)
 }
 
-const setCookie = (name: string, value: string) => {
+function setCookie(name: string, value: string) {
     cookie.set(name, value)
 }
 

@@ -1,37 +1,37 @@
-import request from "@/utils/request";
+import request from '@/utils/request'
 
-//登录
-const login = (data: any): any => {
+// 登录
+function login(data: any): any {
     return request({
-        url: "/login/account",
-        method: "post",
+        url: '/login/account',
+        method: 'post',
         data,
-    });
-}
-
-//获取用户信息
-const getUserInfo = (): any => {
-    return request({
-        url: "/upms/user/current",
-        method: "get",
     })
 }
 
-//获取验证码
-const getCaptcha = (): any => {
+// 获取用户信息
+function getUserInfo(): any {
     return request({
-        url: "/captcha",
-        method: "get",
-        responseType: "blob",
+        url: '/upms/user/current',
+        method: 'get',
     })
 }
 
-//qz/api/captcha/status
-//验证码状态
-const getCaptchaStatus = (): any => {
+// 获取验证码
+function getCaptcha(): any {
     return request({
-        url: "/captcha/status",
-        method: "get",
+        url: '/captcha',
+        method: 'get',
+        responseType: 'blob',
+    })
+}
+
+// qz/api/captcha/status
+// 验证码状态
+function getCaptchaStatus(): any {
+    return request({
+        url: '/captcha/status',
+        method: 'get',
     })
 }
 

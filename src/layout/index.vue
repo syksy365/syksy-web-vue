@@ -1,9 +1,9 @@
 <script setup lang="ts">
-//todo
+// todo
 </script>
 
 <template>
-    <div>layout</div>
+  <div>layout</div>
 </template>
 
 <style scoped>
