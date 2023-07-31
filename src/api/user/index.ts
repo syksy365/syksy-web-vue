@@ -26,9 +26,18 @@ const getCaptcha = (): any => {
     })
 }
 
+//qz/api/captcha/status
+//验证码状态
+const getCaptchaStatus = (): any => {
+    return request({
+        url: "/captcha/status",
+        method: "get",
+    })
+}
 
 export {
     login,
     getUserInfo,
     getCaptcha,
+    getCaptchaStatus,
 }
