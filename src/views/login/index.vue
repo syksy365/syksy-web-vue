@@ -59,6 +59,7 @@ const url = ref<any>(null)
 const isExpired = ref<any>(false)
 const captchaTimer = ref<any>(null)
 const captchaStatus = ref<any>(null)
+// 测试cz
 function captchaFn() {
     getCaptcha().then((res) => {
         // 显示照片
