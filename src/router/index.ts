@@ -1,7 +1,6 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import layout from "@/layout/index.vue";
-import {useUserStore} from "@/stores/user";
-
+import { createRouter, createWebHistory } from 'vue-router'
+import layout from '@/layout/index.vue'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,16 +10,16 @@ const router = createRouter({
             name: 'layout',
             component: layout,
             children: [
-                //todo:主界面的子路由~
-            ]
+                // todo:主界面的子路由~
+            ],
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import("@/views/login/index.vue"),
+            component: () => import('@/views/login/index.vue'),
         },
         {
-            path: "/:pathMatch(.*)*",
+            path: '/:pathMatch(.*)*',
             name: '404',
             component: () => import('@/views/error/404.vue'),
         },
@@ -29,20 +28,20 @@ const router = createRouter({
             name: '401',
             component: () => import('@/views/error/401.vue'),
         },
-    ]
+    ],
 })
 
-//白名单
+// 白名单
 const whiteList = ['/login', '/404', '/401'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
-    const userStore = useUserStore();
+    const userStore = useUserStore()
 
-    //如果没有登录
+    // 如果没有登录
     if (!userStore.haveLogin) {
-        //如果去白名单就不拉去用户信息了
+    // 如果去白名单就不拉去用户信息了
         if (whiteList.includes(to.path)) {
-            //单独处理进入登录界面的
+            // 单独处理进入登录界面的
             if (to.path === '/login') {
                 // userStore.storeGetUserInfo().then(() => {
                 //     //如果已经登录了就跳转到主界面
@@ -52,31 +51,28 @@ router.beforeEach((to, from, next) => {
                 //     next()
                 //     return;
                 // })
-                next();
-                return;//终止这个if
+                next()
+                return// 终止这个if
             }
             next()
-            return;
-        } else {
-            //拉取用户信息
+        }
+        else {
+            // 拉取用户信息
             userStore.storeGetUserInfo().then(() => {
-                next();
-                return
+                next()
             }).catch(() => {
                 next(`/login?redirect=${to.path}`)
             })
         }
-    } else {
-        //如果已经登录
-        if (to.path === '/login') {
-            next({path: '/'});
-            return;
-        }
-        next();
-        return;
     }
-
-
+    else {
+    // 如果已经登录
+        if (to.path === '/login') {
+            next({ path: '/' })
+            return
+        }
+        next()
+    }
 })
 
 export default router
