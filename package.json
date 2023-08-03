@@ -20,6 +20,7 @@
     }
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.4.0",
     "cookiejs": "^2.1.2",
     "dayjs": "^1.11.9",
