@@ -52,6 +52,7 @@ function createService() {
                 const responseType = response.request?.responseType
                 if (responseType === 'blob' || responseType === 'arraybuffer')
                     return data
+                return data
             },
             (error) => {
                 const code = error.response?.status as number
