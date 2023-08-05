@@ -83,14 +83,12 @@ function createService() {
 
 function createRequest(service: AxiosInstance) {
     return function<T>(config: AxiosRequestConfig): Promise<T> {
-        // todo: 从 store 中获取 token
-        const token = ''
         const defaultConfig: AxiosRequestConfig = {
             headers: {
                 // 携带 Token
-                'Authorization': token ? `Bearer ${token}` : undefined,
                 'Content-Type': 'application/json;charset=UTF-8',
             },
+            withCredentials: true,
             baseURL: import.meta.env.VITE_API_BASE_URL,
             timeout: 10000,
         }
