@@ -1,20 +1,3 @@
-/**
- * 判断是否是对象
- * @param {any} obj
- */
-function isObject(obj: any) {
-    return obj !== null && typeof obj === 'object'
-}
+export const objectToString = Object.prototype.toString
 
-/**
- * 判断对象是否为空
- * @param obj
- */
-function isObjEmpty(obj: any) {
-    return isObject(obj) && Object.keys(obj).length === 0
-}
-
-export {
-    isObject,
-    isObjEmpty,
-}
+export const toTypeString = (value: unknown): string => objectToString.call(value)

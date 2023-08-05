@@ -4,3 +4,8 @@ declare module '*.vue' {
     const Component: ReturnType<typeof defineComponent>
     export default Component
 }
+
+
+interface ImportMetaEnv extends Readonly<Record<string, string>> {
+    readonly VITE_API_BASE_URL: string
+  }

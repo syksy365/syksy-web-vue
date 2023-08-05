@@ -1,4 +1,13 @@
+import type * as Models from './models'
 import request from '@/utils/request'
+
+/** 验证码状态 */
+function getCaptchaStatus() {
+    return request<Models.CaptchaStatusResponse>({
+        url: '/captcha/status',
+        method: 'get',
+    })
+}
 
 // 登录
 function login(data: any): any {
@@ -23,15 +32,6 @@ function getCaptcha(): any {
         url: '/captcha',
         method: 'get',
         responseType: 'blob',
-    })
-}
-
-// qz/api/captcha/status
-// 验证码状态
-function getCaptchaStatus(): any {
-    return request({
-        url: '/captcha/status',
-        method: 'get',
     })
 }
 

@@ -88,11 +88,9 @@ onUnmounted(() => {
  *         "effectiveTime": 30
  *     },
  */
-function getCaptchaStatusFn() {
-    getCaptchaStatus().then((res) => {
-        if (res.success)
-            captchaStatus.value = res.data
-    })
+async function getCaptchaStatusFn() {
+    const response = await getCaptchaStatus()
+    response.success && (captchaStatus.value = response.data)
 }
 
 watch(captchaStatus, (newVal) => {
@@ -148,25 +146,25 @@ const rules = ref({
 </template>
 
 <style lang="less" scoped>
+@bg-color: #e5e5e5;
+@white: #fff;
+@captcha-color: #409EFF;
 .login-box {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #e5e5e5;
+    .center();
+    .h-screen();
+    .w-screen();
+    background-color: @bg-color;
 
     .login-inner {
         width: 500px;
         height: 500px;
-        background-color: #fff;
         padding: 20px;
+        background-color: @white;
 
         .captcha-box {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
+            .h-full();
+            .flex();
+            .justify-content(space-between);
 
             .captcha {
                 margin-left: 4px;
@@ -176,14 +174,13 @@ const rules = ref({
             }
 
             .captcha-text {
-                flex-shrink: 0;
+                .shrink();
                 margin-left: 4px;
                 width: 150px;
                 height: 40px;
                 cursor: pointer;
-                color: #409EFF;
                 text-align: center;
-
+                color: @captcha-color;
             }
         }
 

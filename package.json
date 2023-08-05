@@ -21,10 +21,13 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@vueuse/core": "^10.3.0",
     "axios": "^1.4.0",
     "cookiejs": "^2.1.2",
     "dayjs": "^1.11.9",
     "element-plus": "^2.3.8",
+    "lodash-es": "^4.17.21",
+    "normalize.css": "^8.0.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
@@ -36,6 +39,7 @@
     "@commitlint/types": "^17.4.4",
     "@esbuild-kit/cjs-loader": "^2.4.2",
     "@tsconfig/node18": "^2.0.1",
+    "@types/lodash-es": "^4.17.8",
     "@types/node": "^18.17.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
