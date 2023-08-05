@@ -50,7 +50,7 @@ export const useUserStore = defineStore('dict', () => {
     }
 })
 
-interface Dict {
+export interface Dict {
     key: string
     data: any
 }
