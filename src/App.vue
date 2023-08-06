@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ElConfigProvider } from 'element-plus'
 
-// 将 Element Plus 的语言设置为中文
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+// 引入element-plus的语言包
+import * as ElLocales from 'element-plus/es/locale/index'
+import { computed } from 'vue'
+import { elLocale, toHump } from '@/utils'
+
+const elLang = computed(() => {
+    return ElLocales[Object.keys(ElLocales).find(item => item.toLocaleLowerCase() === toHump(elLocale.value).toLocaleLowerCase()) || 'zhCn']
+})
 </script>
 
 <template>
-  <ElConfigProvider :lang="zhCn">
+  <ElConfigProvider :locale="elLang">
     <router-view />
   </ElConfigProvider>
 </template>

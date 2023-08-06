@@ -1,0 +1,32 @@
+{
+  "button": {
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "register": "登録"
+  },
+  "msg": {
+    "yes": "はい",
+    "no": "いいえ",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告",
+    "info": "情報",
+    "confirm": "確認",
+    "delete": "削除",
+    "edit": "編集",
+    "add": "追加",
+    "search": "検索",
+    "reset": "リセット",
+    "save": "保存",
+    "submit": "提出",
+    "close": "閉じる",
+    "refresh": "更新",
+    "download": "ダウンロード",
+    "upload": "アップロード",
+    "more": "もっと",
+    "next": "次へ",
+    "prev": "前へ"
+  }
+}
