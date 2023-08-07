@@ -1,6 +1,8 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { merge } from 'lodash-es'
+import router from '@/router'
+import { i18n } from '@/utils'
 
 const pendingMap = new Map<string | number | symbol, AbortController>()
 
@@ -28,6 +30,8 @@ function removePending(config: AxiosRequestConfig) {
 function createService() {
     const service = axios.create()
 
+    // FIXME: 这里读取不到 i18n
+    const { t } = i18n.global
     // 请求拦截器
     service.interceptors.request
         .use(
@@ -58,15 +62,17 @@ function createService() {
                 const code = error.response?.status as number
 
                 switch (code) {
-                    case 401:
-                        error.message = '登录已过期，请重新登录'
-                        // todo: 跳转到登录页面
+                    case 401: {
+                        error.message = t('error.msg.401')
+                        const fullPath = encodeURIComponent(router.currentRoute.value.fullPath)
+                        router.push(`/login?redirectUrl=${fullPath}`).then(_ => _)
                         break
+                    }
                     case 403:
-                        error.message = '您没有权限访问，请联系管理员'
+                        error.message = t('error.msg.403')
                         break
                     default:
-                        error.message = '系统错误，请联系管理员'
+                        error.message = t('error.msg.default')
                         break
                 }
 
@@ -98,6 +104,7 @@ function createRequest(service: AxiosInstance) {
         return service(mergeConfig)
     }
 }
+
 const service = createService()
 
 export default createRequest(service)

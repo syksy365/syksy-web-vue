@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
 
     // 如果没有登录
     if (!userStore.haveLogin) {
-    // 如果去白名单就不拉去用户信息了
+        // 如果去白名单就不拉去用户信息了
         if (whiteList.includes(to.path)) {
             // 单独处理进入登录界面的
             if (to.path === '/login') {
@@ -60,13 +60,14 @@ router.beforeEach((to, from, next) => {
             // 拉取用户信息
             userStore.storeGetUserInfo().then(() => {
                 next()
-            }).catch(() => {
-                next(`/login?redirect=${to.path}`)
             })
+            //     .catch(() => {
+            //     next(`/login?redirect=${to.path}`)
+            // })
         }
     }
     else {
-    // 如果已经登录
+        // 如果已经登录
         if (to.path === '/login') {
             next({ path: '/' })
             return
