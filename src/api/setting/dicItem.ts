@@ -1,25 +1,22 @@
-/**
- * @description 字典相关请求
- */
-
 import request from '@/utils/request'
+import { setting } from '@/api/setting/common'
 
 function pageDict(params?: any) {
     return request({
-        url: '/qz/api/setting/dic/item/list/page',
+        url: `${setting}/dic/item/list/page`,
         params,
     })
 }
 
 function getDict(id: string) {
     return request({
-        url: `/qz/api/setting/dic/item/list/${id}`,
+        url: `${setting}/dic/item/list/${id}`,
     })
 }
 
 function addDict(data: any) {
     return request({
-        url: '/qz/api/setting/dic/item/list',
+        url: `${setting}/dic/item/list`,
         method: 'post',
         data,
     })
@@ -27,7 +24,7 @@ function addDict(data: any) {
 
 function updateDict(id: string, data: any) {
     return request({
-        url: `/qz/api/setting/dic/item/list/${id}`,
+        url: `${setting}/dic/item/list/${id}`,
         method: 'put',
         data,
     })
@@ -35,8 +32,15 @@ function updateDict(id: string, data: any) {
 
 function removeDict(id: string) {
     return request({
-        url: `/qz/api/setting/dic/item/list/${id}`,
+        url: `${setting}/dic/item/list/${id}`,
         method: 'delete',
+    })
+}
+
+function getDictInfo(dicName: string) {
+    return request({
+        url: `${setting}/dic/item/list/list`,
+        params: { dicName },
     })
 }
 
@@ -46,4 +50,5 @@ export {
     addDict,
     updateDict,
     removeDict,
+    getDictInfo,
 }

@@ -1,5 +1,6 @@
 import { ref, toRefs } from 'vue'
 import { useUserStore } from '@/stores/dict'
+import { getDictInfo } from '@/api/setting/dicItem'
 
 /**
  * 获取字典数据
@@ -12,10 +13,16 @@ export function useDict(...args: string[]) {
             const dicts = useUserStore().storeGetDict(dictType)
             if (dicts) {
                 res.value[dictType] = dicts
+                // 表示已经获取到了字典表
+                res.value[dictType].isGetDict = true
             }
             else {
-                // TODO: 没看明白是哪个接口 明天问问
-
+                getDictInfo(dictType).then((response: any) => {
+                    res.value[dictType] = response.data
+                    // 表示已经获取到了字典表
+                    res.value[dictType].isGetDict = true
+                    useUserStore().storeSetDict(dictType, response.data)
+                })
             }
         })
         return toRefs(res.value)
