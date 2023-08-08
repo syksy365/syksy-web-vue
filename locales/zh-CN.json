@@ -29,6 +29,21 @@
     "next": "下一步",
     "prev": "上一步"
   },
+  "form": {
+    "login": {
+      "username": "用户名",
+      "password": "密码",
+      "captcha": "验证码",
+      "captchaExpired": "验证码过期了点击刷新"
+    },
+    "placeholder": {
+      "pleaseSelect": "请选择",
+      "pleaseInput": "请输入",
+      "pleaseInputYour": "请输入你的",
+      "pleaseSelectDate": "请选择{0}日期",
+      "pleaseSelectTime": "请选择{0}}时间"
+    }
+  },
   "error": {
     "msg": {
       "401": "登录已过期，请重新登录",
@@ -45,6 +60,20 @@
       "default": "系统错误",
       "network": "网络错误",
       "timeout": "请求超时"
+    },
+    "login": {
+      "username": "请输入用户名",
+      "password": "请输入密码",
+      "captcha": "请输入验证码",
+      "captchaExpired": "验证码过期了点击刷新"
+    },
+    "validate": {
+      "length": {
+        "min": "最少{0}个字符",
+        "max": "最多{0}个字符",
+        "equal": "长度必须为{0}个字符",
+        "range": "长度在{0}到{1}个字符"
+      }
     }
   }
 }

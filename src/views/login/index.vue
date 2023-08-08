@@ -2,6 +2,7 @@
 import { onUnmounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { getAllUrlParams } from '@/utils'
 import { getCaptcha, getCaptchaStatus } from '@/api/user'
@@ -11,6 +12,8 @@ const form = reactive({
     password: '',
     captcha: '',
 })
+
+const { t } = useI18n()
 
 const loginForm = ref(null)
 
@@ -31,26 +34,18 @@ function handleClickLogin() {
             }
             else if (res.status === 'error') {
                 ElNotification({
-                    title: '登录出了问题',
+                    title: t('error.title.default'),
                     message: res.message,
                     type: 'error',
                 })
             }
         }).catch(() => {
             ElNotification({
-                title: '登录出了问题',
-                message: '登录失败,请检查网络',
+                title: t('error.msg.default'),
                 type: 'error',
             })
             return false
         })
-    }).catch(() => {
-        ElNotification({
-            title: '请填写完整',
-            message: '请检查输入',
-            type: 'error',
-        })
-        return false
     })
 }
 
@@ -104,16 +99,16 @@ getCaptchaStatusFn()
 
 const rules = ref({
     username: [
-        { required: true, message: '请输入用户名', trigger: 'blur' },
-        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' },
+        { required: true, message: t('error.login.username'), trigger: 'blur' },
+        { min: 3, max: 10, message: t('error.validate.length.range', [3, 10]), trigger: 'blur' },
     ],
     password: [
-        { required: true, message: '请输入密码', trigger: 'blur' },
-        { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+        { required: true, message: t('error.login.password'), trigger: 'blur' },
+        { min: 6, max: 20, message: t('error.validate.length.range', [6, 20]), trigger: 'blur' },
     ],
     captcha: [
-        { required: true, message: '请输入验证码', trigger: 'blur' },
-        { min: 4, max: 4, message: '长度为 4 个字符', trigger: 'blur' },
+        { required: true, message: t('error.login.captcha'), trigger: 'blur' },
+        { min: 4, max: 4, message: t('error.validate.length.equal', [4]), trigger: 'blur' },
     ],
 })
 </script>
@@ -121,23 +116,41 @@ const rules = ref({
 <template>
   <div class="login-box">
     <div class="login-inner">
-      <el-form ref="loginForm" :model="form" :rules="rules" size="large" label-width="80px">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" @keydown.enter="handleClickLogin" />
+      <el-form ref="loginForm" :model="form" :rules="rules" size="large" label-width="120px">
+        <el-form-item :label="t('form.login.username')" prop="username">
+          <el-input
+            v-model="form.username"
+            :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.username')"
+            @keydown.enter="handleClickLogin"
+          />
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" show-password @keydown.enter="handleClickLogin" />
+        <el-form-item :label="t('form.login.password')" prop="password">
+          <el-input
+            v-model="form.password"
+            :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.password')"
+            show-password @keydown.enter="handleClickLogin"
+          />
         </el-form-item>
-        <el-form-item v-if="captchaStatus && captchaStatus.enable" label="验证码" prop="captcha">
+        <el-form-item
+          v-if="captchaStatus && captchaStatus.enable" :label="t('form.login.captcha')"
+          prop="captcha"
+        >
           <div class="captcha-box">
-            <el-input v-model="form.captcha" @keydown.enter="handleClickLogin" />
+            <el-input
+              v-model="form.captcha"
+              :placeholder="t('form.placeholder.pleaseInput') + t('form.login.captcha')"
+              @keydown.enter="handleClickLogin"
+            />
             <img v-if="!isExpired" class="captcha" :src="url" alt="captcha" @click="captchaFn">
-            <span v-if="isExpired" class="captcha-text" @click="captchaFn">验证码过期了点击刷新</span>
+            <span
+              v-if="isExpired" class="captcha-text"
+              @click="captchaFn"
+            >{{ $t("form.login.captchaExpired") }}</span>
           </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleClickLogin">
-            登录
+            {{ $t("button.login") }}
           </el-button>
         </el-form-item>
       </el-form>
