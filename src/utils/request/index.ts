@@ -1,6 +1,8 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { ElNotification } from 'element-plus'
 import { merge } from 'lodash-es'
+import router from '@/router'
+import { i18n } from '@/plugins/I18n'
 
 const pendingMap = new Map<string | number | symbol, AbortController>()
 
@@ -28,6 +30,8 @@ function removePending(config: AxiosRequestConfig) {
 function createService() {
     const service = axios.create()
 
+    // FIXME:进入页面I18n还没有加载完毕的时候 给默认值 不清楚怎么处理好一些 先这样 2023年8月8日
+    const { te } = i18n.global
     // 请求拦截器
     service.interceptors.request
         .use(
@@ -58,15 +62,17 @@ function createService() {
                 const code = error.response?.status as number
 
                 switch (code) {
-                    case 401:
-                        error.message = '登录已过期，请重新登录'
-                        // todo: 跳转到登录页面
+                    case 401: {
+                        error.message = te('error.msg.401') || '登录已过期，请重新登录'
+                        const fullPath = encodeURIComponent(router.currentRoute.value.fullPath)
+                        router.push(`/login?redirectUrl=${fullPath}`).then(_ => _)
                         break
+                    }
                     case 403:
-                        error.message = '您没有权限访问，请联系管理员'
+                        error.message = te('error.msg.403') || '您没有权限访问该页面'
                         break
                     default:
-                        error.message = '系统错误，请联系管理员'
+                        error.message = te('error.msg.default') || '您访问的页面不存在'
                         break
                 }
 
@@ -98,6 +104,7 @@ function createRequest(service: AxiosInstance) {
         return service(mergeConfig)
     }
 }
+
 const service = createService()
 
 export default createRequest(service)

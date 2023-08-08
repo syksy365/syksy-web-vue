@@ -28,5 +28,51 @@
     "more": "More",
     "next": "Next",
     "prev": "Previous"
+  },
+  "form": {
+    "login": {
+      "username": "username",
+      "password": "password",
+      "captcha": "captcha",
+      "captchaExpired": "Captcha expired, please click to refresh"
+    },
+    "placeholder": {
+      "pleaseSelect": "Please select ",
+      "pleaseInput": "Please input ",
+      "pleaseInputYour": "Please input your ",
+      "pleaseSelectDate": "Please select {0} date",
+      "pleaseInputDate": "Please input {0} date"
+    }
+  },
+  "error": {
+    "msg": {
+      "401": "Login expired, please login again",
+      "403": "You don't have permission to access this page",
+      "404": "The page you are trying to access does not exist",
+      "default": "System error, please contact the administrator",
+      "network": "Network error, please check your network connection"
+    },
+    "title": {
+      "401": "Login has expired",
+      "403": "No permission",
+      "404": "Page not found",
+      "default": "System error",
+      "network": "Network error",
+      "timeout": "Request timeout"
+    },
+    "login": {
+      "username": "Please enter your username",
+      "password": "Please enter your password",
+      "captcha": "Please enter the captcha",
+      "captchaExpired": "The captcha has expired, please click to refresh"
+    },
+    "validate": {
+      "length": {
+        "min": "The length cannot be less than {0}",
+        "max": "The length cannot be greater than {0}",
+        "equal": "The length must be {0}",
+        "range": "The length must be between {0} and {1}"
+      }
+    }
   }
 }

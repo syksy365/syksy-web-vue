@@ -11,7 +11,7 @@ import { ref } from 'vue'
 // https://vitejs.dev/guide/features.html#glob-import
 //
 // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
-const i18n = createI18n({
+export const i18n = createI18n({
     legacy: false,
     locale: '',
     messages: {},
