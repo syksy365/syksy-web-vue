@@ -12,7 +12,7 @@ const elLang = computed(() => {
 </script>
 
 <template>
-  <ElConfigProvider :locale="elLang">
-    <router-view />
-  </ElConfigProvider>
+    <ElConfigProvider :locale="elLang">
+        <router-view />
+    </ElConfigProvider>
 </template>

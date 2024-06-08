@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-expect-error
 import type { Locale } from 'vue-i18n'
 
-// @ts-expect-error
 import { createI18n } from 'vue-i18n'
-import { type App } from 'vue'
+import type { App } from 'vue'
 import { ref } from 'vue'
 
 // Import i18n resources

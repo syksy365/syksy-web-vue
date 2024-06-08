@@ -42,7 +42,8 @@ function createService() {
 
                 return config
             },
-            error => Promise.reject(error))
+            error => Promise.reject(error),
+        )
 
     // 响应拦截器
     service.interceptors.response
@@ -82,7 +83,8 @@ function createService() {
                     type: 'warning',
                 })
                 return Promise.reject(error)
-            })
+            },
+        )
 
     return service
 }

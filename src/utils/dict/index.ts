@@ -8,7 +8,7 @@ import { getDictInfo } from '@/api/setting/dicItem'
 export function useDict(...args: string[]) {
     const res = ref<any>({})
     return (() => {
-        args.forEach((dictType, index) => {
+        args.forEach((dictType, _index) => {
             res.value[dictType] = []
             const dicts = useUserStore().storeGetDict(dictType)
             if (dicts) {

@@ -114,48 +114,48 @@ const rules = ref({
 </script>
 
 <template>
-  <div class="login-box">
-    <div class="login-inner">
-      <el-form ref="loginForm" :model="form" :rules="rules" size="large" label-width="120px">
-        <el-form-item :label="t('form.login.username')" prop="username">
-          <el-input
-            v-model="form.username"
-            :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.username')"
-            @keydown.enter="handleClickLogin"
-          />
-        </el-form-item>
-        <el-form-item :label="t('form.login.password')" prop="password">
-          <el-input
-            v-model="form.password"
-            :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.password')"
-            show-password @keydown.enter="handleClickLogin"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="captchaStatus && captchaStatus.enable" :label="t('form.login.captcha')"
-          prop="captcha"
-        >
-          <div class="captcha-box">
-            <el-input
-              v-model="form.captcha"
-              :placeholder="t('form.placeholder.pleaseInput') + t('form.login.captcha')"
-              @keydown.enter="handleClickLogin"
-            />
-            <img v-if="!isExpired" class="captcha" :src="url" alt="captcha" @click="captchaFn">
-            <span
-              v-if="isExpired" class="captcha-text"
-              @click="captchaFn"
-            >{{ $t("form.login.captchaExpired") }}</span>
-          </div>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleClickLogin">
-            {{ $t("button.login") }}
-          </el-button>
-        </el-form-item>
-      </el-form>
+    <div class="login-box">
+        <div class="login-inner">
+            <el-form ref="loginForm" :model="form" :rules="rules" size="large" label-width="120px">
+                <el-form-item :label="t('form.login.username')" prop="username">
+                    <el-input
+                        v-model="form.username"
+                        :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.username')"
+                        @keydown.enter="handleClickLogin"
+                    />
+                </el-form-item>
+                <el-form-item :label="t('form.login.password')" prop="password">
+                    <el-input
+                        v-model="form.password"
+                        :placeholder="t('form.placeholder.pleaseInputYour') + t('form.login.password')"
+                        show-password @keydown.enter="handleClickLogin"
+                    />
+                </el-form-item>
+                <el-form-item
+                    v-if="captchaStatus && captchaStatus.enable" :label="t('form.login.captcha')"
+                    prop="captcha"
+                >
+                    <div class="captcha-box">
+                        <el-input
+                            v-model="form.captcha"
+                            :placeholder="t('form.placeholder.pleaseInput') + t('form.login.captcha')"
+                            @keydown.enter="handleClickLogin"
+                        />
+                        <img v-if="!isExpired" class="captcha" :src="url" alt="captcha" @click="captchaFn">
+                        <span
+                            v-if="isExpired" class="captcha-text"
+                            @click="captchaFn"
+                        >{{ $t("form.login.captchaExpired") }}</span>
+                    </div>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="handleClickLogin">
+                        {{ $t("button.login") }}
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
-  </div>
 </template>
 
 <style lang="less" scoped>
