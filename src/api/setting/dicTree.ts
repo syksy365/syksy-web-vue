@@ -2,7 +2,7 @@
  * @description 字典相关请求
  */
 
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 import { setting } from '@/api/setting/common'
 
 function getDictTreeInfo(id: string) {

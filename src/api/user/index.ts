@@ -1,5 +1,5 @@
 import type * as Models from './models'
-import request from '@/utils/request'
+import { request, service } from '@/utils/request'
 
 /** 验证码状态 */
 function getCaptchaStatus() {
@@ -10,8 +10,8 @@ function getCaptchaStatus() {
 }
 
 // 登录
-function login(data: any): any {
-    return request({
+function login(data: Models.LoginParams) {
+    return request<Models.LoginResponse>({
         url: '/login/account',
         method: 'post',
         data,
@@ -19,16 +19,16 @@ function login(data: any): any {
 }
 
 // 获取用户信息
-function getUserInfo(): any {
-    return request({
+function getUserInfo() {
+    return request<Models.UserInfo>({
         url: '/upms/user/current',
         method: 'get',
     })
 }
 
 // 获取验证码
-function getCaptcha(): any {
-    return request({
+function getCaptcha() {
+    return service<Blob>({
         url: '/captcha',
         method: 'get',
         responseType: 'blob',
@@ -40,4 +40,8 @@ export {
     getUserInfo,
     getCaptcha,
     getCaptchaStatus,
+}
+
+export type{
+    Models,
 }

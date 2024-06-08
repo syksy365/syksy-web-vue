@@ -36,7 +36,7 @@ function createService() {
     service.interceptors.request
         .use(
             (config) => {
-                // 请求前，将请求添加到 pending 中
+            // 请求前，将请求添加到 pending 中
                 removePending(config)
                 addPending(config)
 
@@ -49,7 +49,7 @@ function createService() {
     service.interceptors.response
         .use(
             (response) => {
-                // 请求完成后，将请求从 pending 中移除
+            // 请求完成后，将请求从 pending 中移除
                 removePending(response.config)
 
                 const data = response.data
@@ -90,7 +90,7 @@ function createService() {
 }
 
 function createRequest(service: AxiosInstance) {
-    return function<T>(config: AxiosRequestConfig): Promise<T> {
+    return function <T>(config: AxiosRequestConfig): Promise<Response<T>> {
         const defaultConfig: AxiosRequestConfig = {
             headers: {
                 // 携带 Token
@@ -107,6 +107,6 @@ function createRequest(service: AxiosInstance) {
     }
 }
 
-const service = createService()
+export const service = createService()
 
-export default createRequest(service)
+export const request = createRequest(service)

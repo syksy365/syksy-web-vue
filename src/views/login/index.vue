@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onUnmounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import type { FormInstance } from 'element-plus'
 import { ElNotification } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
@@ -15,21 +16,22 @@ const form = reactive({
 
 const { t } = useI18n()
 
-const loginForm = ref(null)
+const loginForm = ref<FormInstance | null>(null)
 
 const userStore = useUserStore()
 const router = useRouter()
 
 function handleClickLogin() {
-    loginForm.value.validate().then(() => {
+    loginForm.value?.validate().then(() => {
         userStore.storeLogin(form).then((res) => {
+            console.log(res)
+            const redirect = getAllUrlParams().redirect
             // 登录成功
             if (res.status === 'ok') {
-                if (getAllUrlParams().redirect)
-                    router.push(getAllUrlParams().redirect)
+                if (redirect)
+                    router.push(redirect)
                 else
                     router.push('/')
-
                 // 登录失败
             }
             else if (res.status === 'error') {
@@ -51,9 +53,10 @@ function handleClickLogin() {
 
 const url = ref<any>(null)
 // 是否过期了
-const isExpired = ref<any>(false)
+const isExpired = ref(false)
 const captchaTimer = ref<any>(null)
 const captchaStatus = ref<any>(null)
+
 // 测试cz
 function captchaFn() {
     getCaptcha().then((res) => {
@@ -75,14 +78,6 @@ onUnmounted(() => {
         clearTimeout(captchaTimer.value)
 })
 
-/**
- * {
- *     "success": true,
- *     "data": {
- *         "enable": true,
- *         "effectiveTime": 30
- *     },
- */
 async function getCaptchaStatusFn() {
     const response = await getCaptchaStatus()
     response.success && (captchaStatus.value = response.data)
@@ -97,20 +92,20 @@ watch(captchaStatus, (newVal) => {
 
 getCaptchaStatusFn()
 
-const rules = ref({
+const rules = {
     username: [
         { required: true, message: t('error.login.username'), trigger: 'blur' },
         { min: 3, max: 10, message: t('error.validate.length.range', [3, 10]), trigger: 'blur' },
     ],
     password: [
         { required: true, message: t('error.login.password'), trigger: 'blur' },
-        { min: 6, max: 20, message: t('error.validate.length.range', [6, 20]), trigger: 'blur' },
+        { min: 2, max: 20, message: t('error.validate.length.range', [6, 20]), trigger: 'blur' },
     ],
     captcha: [
         { required: true, message: t('error.login.captcha'), trigger: 'blur' },
         { min: 4, max: 4, message: t('error.validate.length.equal', [4]), trigger: 'blur' },
     ],
-})
+}
 </script>
 
 <template>

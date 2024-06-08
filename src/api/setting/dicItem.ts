@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 import { setting } from '@/api/setting/common'
 
 function pageDict(params?: any) {
