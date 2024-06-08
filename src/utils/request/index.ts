@@ -36,7 +36,7 @@ function createService() {
     service.interceptors.request
         .use(
             (config) => {
-                // 请求前，将请求添加到 pending 中
+            // 请求前，将请求添加到 pending 中
                 removePending(config)
                 addPending(config)
 
@@ -49,7 +49,7 @@ function createService() {
     service.interceptors.response
         .use(
             (response) => {
-                // 请求完成后，将请求从 pending 中移除
+            // 请求完成后，将请求从 pending 中移除
                 removePending(response.config)
 
                 const data = response.data
@@ -90,7 +90,7 @@ function createService() {
 }
 
 function createRequest(service: AxiosInstance) {
-    return function<T>(config: AxiosRequestConfig): Promise<T> {
+    return function <T>(config: AxiosRequestConfig): Promise<T> {
         const defaultConfig: AxiosRequestConfig = {
             headers: {
                 // 携带 Token
@@ -100,13 +100,12 @@ function createRequest(service: AxiosInstance) {
             baseURL: import.meta.env.VITE_API_BASE_URL,
             timeout: 10000,
         }
-
         // 将默认配置 defaultConfig 和传入的自定义配置 config 进行合并成为 mergeConfig
         const mergeConfig = merge(defaultConfig, config)
         return service(mergeConfig)
     }
 }
 
-const service = createService()
+const serviceFn = createService()
 
-export default createRequest(service)
+export const request = createRequest(serviceFn)
