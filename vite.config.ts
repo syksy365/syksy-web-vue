@@ -29,7 +29,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }: ConfigEnv
         css: {
             preprocessorOptions: {
                 less: {
-                    additionalData: '@import "@/styles/utils.less";',
+                    additionalData: '@import "@/styles/utils.scss";',
                 },
             },
         },
