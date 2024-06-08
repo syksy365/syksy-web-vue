@@ -31,4 +31,5 @@ export interface LoginParams {
 export interface LoginResponse {
     status: ResStatus
     type: 'account'
+    message: string
 }

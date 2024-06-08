@@ -17,11 +17,11 @@ export const useUserStore = defineStore('user', () => {
             getUserInfo().then((res) => {
                 info.value = res.data
                 haveLogin.value = true
-                return Promise.resolve()
+                resolve(res)
             }).catch((err) => {
                 info.value = null
                 haveLogin.value = false
-                return Promise.reject(err)
+                reject(err)
             })
         })
     }

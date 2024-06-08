@@ -1,9 +1,9 @@
 import type * as Models from './models'
-import { request, service } from '@/utils/request'
+import { request } from '@/utils/request'
 
 /** 验证码状态 */
 function getCaptchaStatus() {
-    return request<Models.CaptchaStatusResponse>({
+    return request<Response<Models.CaptchaStatusResponse>>({
         url: '/captcha/status',
         method: 'get',
     })
@@ -20,7 +20,7 @@ function login(data: Models.LoginParams) {
 
 // 获取用户信息
 function getUserInfo() {
-    return request<Models.UserInfo>({
+    return request<Response<Models.UserInfo>>({
         url: '/upms/user/current',
         method: 'get',
     })
@@ -28,7 +28,7 @@ function getUserInfo() {
 
 // 获取验证码
 function getCaptcha() {
-    return service<Blob>({
+    return request<Blob>({
         url: '/captcha',
         method: 'get',
         responseType: 'blob',

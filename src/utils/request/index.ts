@@ -90,7 +90,7 @@ function createService() {
 }
 
 function createRequest(service: AxiosInstance) {
-    return function <T>(config: AxiosRequestConfig): Promise<Response<T>> {
+    return function <T>(config: AxiosRequestConfig): Promise<T> {
         const defaultConfig: AxiosRequestConfig = {
             headers: {
                 // 携带 Token
@@ -100,13 +100,12 @@ function createRequest(service: AxiosInstance) {
             baseURL: import.meta.env.VITE_API_BASE_URL,
             timeout: 10000,
         }
-
         // 将默认配置 defaultConfig 和传入的自定义配置 config 进行合并成为 mergeConfig
         const mergeConfig = merge(defaultConfig, config)
         return service(mergeConfig)
     }
 }
 
-export const service = createService()
+const serviceFn = createService()
 
-export const request = createRequest(service)
+export const request = createRequest(serviceFn)

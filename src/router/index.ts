@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { ElNotification } from 'element-plus'
 import layout from '@/layout/index.vue'
 import { useUserStore } from '@/stores/user'
 
@@ -6,7 +7,7 @@ const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '',
+            path: '/',
             name: 'layout',
             component: layout,
             children: [
@@ -43,15 +44,19 @@ router.beforeEach((to, from, next) => {
         if (whiteList.includes(to.path)) {
             // 单独处理进入登录界面的
             if (to.path === '/login') {
-                // userStore.storeGetUserInfo().then(() => {
-                //     //如果已经登录了就跳转到主界面
-                //     next('/');
-                //     return;
-                // }).catch(() => {
-                //     next()
-                //     return;
-                // })
-                next()
+                userStore.storeGetUserInfo().then(() => {
+                    // 如果已经登录了就跳转到主界面
+                    ElNotification({
+                        title: '系统提示',
+                        message: '您已经登录了',
+                        type: 'warning',
+                    })
+                    // 回到来的地方
+                    console.log(from)
+                    next(from)
+                }).catch(() => {
+                    next()
+                })
                 return// 终止这个if
             }
             next()
@@ -61,9 +66,6 @@ router.beforeEach((to, from, next) => {
             userStore.storeGetUserInfo().then(() => {
                 next()
             })
-            //     .catch(() => {
-            //     next(`/login?redirect=${to.path}`)
-            // })
         }
     }
     else {

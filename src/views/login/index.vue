@@ -21,34 +21,31 @@ const loginForm = ref<FormInstance | null>(null)
 const userStore = useUserStore()
 const router = useRouter()
 
-function handleClickLogin() {
-    loginForm.value?.validate().then(() => {
-        userStore.storeLogin(form).then((res) => {
-            console.log(res)
-            const redirect = getAllUrlParams().redirect
-            // 登录成功
-            if (res.status === 'ok') {
-                if (redirect)
-                    router.push(redirect)
-                else
-                    router.push('/')
-                // 登录失败
-            }
-            else if (res.status === 'error') {
-                ElNotification({
-                    title: t('error.title.default'),
-                    message: res.message,
-                    type: 'error',
-                })
-            }
-        }).catch(() => {
-            ElNotification({
-                title: t('error.msg.default'),
-                type: 'error',
-            })
-            return false
+async function handleClickLogin() {
+    try {
+        await loginForm.value?.validate()
+    }
+    catch (e) {
+        return
+    }
+
+    try {
+        const res = await userStore.storeLogin(form)
+        const redirect = getAllUrlParams().redirect
+        if (res.status !== 'ok') {
+            throw new Error(res.message)
+        }
+        if (redirect)
+            router.push(redirect)
+        else
+            router.push('/')
+    }
+    catch (e: any) {
+        ElNotification({
+            title: e.message || t('error.msg.default'),
+            type: 'error',
         })
-    })
+    }
 }
 
 const url = ref<any>(null)
