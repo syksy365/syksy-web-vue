@@ -7,7 +7,7 @@ import { computed } from 'vue'
 import { elLocale, toHump } from '@/utils'
 
 const elLang = computed(() => {
-    return ElLocales[Object.keys(ElLocales).find(item => item.toLocaleLowerCase() === toHump(elLocale.value).toLocaleLowerCase()) || 'zhCn']
+    return ElLocales[toHump(elLocale.value) as keyof typeof ElLocales] || ElLocales.zhCn
 })
 </script>
 

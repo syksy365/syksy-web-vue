@@ -7,8 +7,7 @@ import router from './router'
 import { setupPlugins } from '@/plugins'
 
 // 样式
-import 'normalize.css'
-import '@/styles/index.less'
+import '@/styles/index.scss'
 
 const app = createApp(App)
 

@@ -14,6 +14,8 @@ export const useUserStore = defineStore('user', () => {
     // 获取用户信息
     const storeGetUserInfo = () => {
         return new Promise((resolve, reject) => {
+            if (haveLogin.value)
+                resolve(info.value)
             getUserInfo().then((res) => {
                 info.value = res.data
                 haveLogin.value = true
