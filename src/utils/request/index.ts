@@ -49,8 +49,9 @@ function createService() {
     service.interceptors.response
         .use(
             (response) => {
-            // 请求完成后，将请求从 pending 中移除
+                // 请求完成后，将请求从 pending 中移除
                 removePending(response.config)
+                // 理论上这里应该判断是否请求成功的
 
                 const data = response.data
                 // 判断是否返回为二进制
