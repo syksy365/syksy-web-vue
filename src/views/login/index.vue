@@ -150,26 +150,25 @@ const rules = {
     </div>
 </template>
 
-<style lang="less" scoped>
-@bg-color: #e5e5e5;
-@white: #fff;
-@captcha-color: #409EFF;
+<style lang="scss" scoped>
 .login-box {
-    .center();
-    .h-screen();
-    .w-screen();
-    background-color: @bg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #e5e5e5;
 
     .login-inner {
         width: 500px;
         height: 500px;
         padding: 20px;
-        background-color: @white;
+        background-color: #fff;
 
         .captcha-box {
-            .h-full();
-            .flex();
-            .justify-content(space-between);
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
 
             .captcha {
                 margin-left: 4px;
@@ -179,13 +178,13 @@ const rules = {
             }
 
             .captcha-text {
-                .shrink();
+                flex-shrink: 0;
                 margin-left: 4px;
                 width: 150px;
                 height: 40px;
                 cursor: pointer;
                 text-align: center;
-                color: @captcha-color;
+                color: #409eff;
             }
         }
 

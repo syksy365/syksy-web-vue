@@ -13,12 +13,8 @@ export function useGuardRouter(router: Router) {
 
         if (!isLoggedIn) {
             if (isWhiteListed) {
-                if (to.path === '/login') {
-                    await handleLoginRoute(userStore, from, next)
-                }
-                else {
-                    next()
-                }
+                // TODO:我想让登录之后就不可以去登录页面 这里先next放过 不然会有问题
+                next()
             }
             else {
                 await handleUnauthorizedRoute(userStore, next)

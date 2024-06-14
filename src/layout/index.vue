@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import SliderBar from '@/components/slider-bar/index.vue'
 // todo
 </script>
 
 <template>
     <div class="layout_container">
-        <div class="layout-slider">
+        <div class="layout_slider">
             <div class="logo">
                 logo
             </div>
             <div class="slider_content">
-                侧边栏
+                <SliderBar />
             </div>
         </div>
         <div class="layout_content">
@@ -34,7 +35,7 @@
     display: flex;
     overflow: hidden;
 
-    .layout-slider {
+    .layout_slider {
         width: 200px;
         background-color: #f0f0f0;
         display: flex;

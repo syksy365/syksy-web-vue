@@ -5,7 +5,7 @@ interface PermissionItem {
     children: Array<PermissionItem>
     name: string
     path: string | null
-    genre: string
+    genre: 'directory' | 'action'
     expand: boolean | null
     remark: string | null
     disabled: null | boolean
