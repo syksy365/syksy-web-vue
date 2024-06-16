@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import type { PermissionList } from '@/api/permission/models'
 import { getPermissionList } from '@/api/permission'
-import { baseRouter } from '@/router'
+import router from '@/router'
 
 const allViews = import.meta.glob('./../../views/**/*.vue')
 console.log(allViews)
@@ -14,15 +14,26 @@ const useAllView = Object.entries(allViews).map(([key, value]) => {
     }
 })
 
-console.log(useAllView)
+console.log('useAllView', useAllView)
+
+interface SidebarItem {
+    name: string
+    path: string
+    children: SidebarItem[]
+}
 
 export const usePermissionStore = defineStore('permission', () => {
     const permission_list_r = ref<PermissionList>([])
     const have_permission_r = ref<boolean>(false)
-    // TODO:类型 需要重写
-    const use_sidebar_r = ref<any[]>(baseRouter)
+    // 侧边栏展示需要的
+    const use_sidebar_r = ref<SidebarItem[]>([])
 
-    // TODO：退出的时候要清空
+    function reset() {
+        permission_list_r.value = []
+        have_permission_r.value = false
+        use_sidebar_r.value = []
+    }
+
     function getPermission() {
         return new Promise<PermissionList>((resolve, reject) => {
             if (have_permission_r.value) {
@@ -32,8 +43,8 @@ export const usePermissionStore = defineStore('permission', () => {
             getPermissionList().then((res) => {
                 permission_list_r.value = res.data
                 have_permission_r.value = true
-                use_sidebar_r.value = generateSidebar(cloneDeep(res.data))
-                console.log(use_sidebar_r)
+                use_sidebar_r.value.push(...generateSidebar(cloneDeep(res.data)))
+                console.log('use_sidebar_r', use_sidebar_r.value)
                 resolve(res.data)
             }).catch((err) => {
                 reject(err)
@@ -41,16 +52,26 @@ export const usePermissionStore = defineStore('permission', () => {
         })
     }
 
-    function generateSidebar(permission_list: PermissionList): PermissionList {
+    function generateSidebar(permission_list: PermissionList): SidebarItem[] {
         return permission_list.filter((item) => {
             return item.genre === 'directory'
-        }).map(({ children, ...item }) => {
+        }).map((item, index) => {
+            // 顺便这里给addRoute用上
+            const component = useAllView.find((view) => {
+                return `/${view.key}` === `${item.path}/index`
+            })?.value
+            if (component) {
+                // 如果可以给后端也重构就好了 目前很多东西都无法实现的
+                router.addRoute('layout', {
+                    name: item.name,
+                    path: item.path || '/',
+                    component,
+                })
+            }
             return ({
-                ...item,
                 path: item.path || '/',
-                key: item.id,
-                // icon: breadthFirstSearchIcon(item.path),
-                children: children && generateSidebar(children),
+                name: item.name,
+                children: item.children && generateSidebar(item.children),
             })
         })
     }

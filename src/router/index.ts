@@ -7,10 +7,10 @@ export const baseRouter: RouteRecordRaw[] = [
         path: '/',
         name: 'layout',
         component: layout,
-        redirect: '/index',
+        redirect: '/',
         children: [
             {
-                path: '/index',
+                path: '/',
                 component: () => import('@/views/index/index.vue'),
                 name: 'Index',
                 meta: { title: '首页' },

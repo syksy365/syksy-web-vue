@@ -10,14 +10,13 @@ export function useGuardRouter(router: Router) {
         const userStore = useUserStore()
         const isLoggedIn = userStore.haveLogin
         const isWhiteListed = whiteList.includes(to.path)
-
         if (!isLoggedIn) {
             if (isWhiteListed) {
                 // TODO:我想让登录之后就不可以去登录页面 这里先next放过 不然会有问题
                 next()
             }
             else {
-                await handleUnauthorizedRoute(userStore, next)
+                await handleUnauthorizedRoute(userStore, next, to)
             }
         }
         else {
@@ -47,11 +46,14 @@ async function handleLoginRoute(userStore: ReturnType<typeof useUserStore>, from
     }
 }
 
-async function handleUnauthorizedRoute(userStore: ReturnType<typeof useUserStore>, next: NavigationGuardNext) {
+async function handleUnauthorizedRoute(userStore: ReturnType<typeof useUserStore>, next: NavigationGuardNext, to: any) {
     try {
         await userStore.storeGetUserInfo()
         await getPermission()
-        next()
+        console.log('to', to)
+        // debugger
+        // next({...to, replace: true})
+        next(to.fullPath)
     }
     catch {
         next('/login')

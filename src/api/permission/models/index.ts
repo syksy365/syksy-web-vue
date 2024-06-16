@@ -11,6 +11,7 @@ interface PermissionItem {
     disabled: null | boolean
     createTime: string
     updateTime: string
+    component: any
 }
 
 type PermissionList = Array<PermissionItem>
