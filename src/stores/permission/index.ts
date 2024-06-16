@@ -16,10 +16,11 @@ const useAllView = Object.entries(allViews).map(([key, value]) => {
 
 console.log('useAllView', useAllView)
 
-interface SidebarItem {
+export interface SidebarItem {
     name: string
     path: string
     children: SidebarItem[]
+    isRoute: boolean
 }
 
 export const usePermissionStore = defineStore('permission', () => {
@@ -72,6 +73,7 @@ export const usePermissionStore = defineStore('permission', () => {
                 path: item.path || '/',
                 name: item.name,
                 children: item.children && generateSidebar(item.children),
+                isRoute: !!component,
             })
         })
     }
