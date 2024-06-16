@@ -1,8 +1,8 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
-import { ElNotification } from 'element-plus'
 import { merge } from 'lodash-es'
 import router from '@/router'
 import { i18n } from '@/plugins/I18n'
+import { notification } from '@/utils'
 
 const pendingMap = new Map<string | number | symbol, AbortController>()
 
@@ -78,11 +78,7 @@ function createService() {
                         break
                 }
 
-                ElNotification({
-                    title: '系统提示',
-                    message: error.message,
-                    type: 'warning',
-                })
+                notification.warning(error.message)
                 return Promise.reject(error)
             },
         )

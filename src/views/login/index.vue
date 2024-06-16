@@ -2,10 +2,9 @@
 import { onUnmounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { FormInstance } from 'element-plus'
-import { ElNotification } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
-import { getAllUrlParams } from '@/utils'
+import { getAllUrlParams, notification } from '@/utils'
 import { getCaptcha, getCaptchaStatus } from '@/api/user'
 
 const form = reactive({
@@ -41,10 +40,7 @@ async function handleClickLogin() {
             router.push('/')
     }
     catch (e: any) {
-        ElNotification({
-            title: e.message || t('error.msg.default'),
-            type: 'error',
-        })
+        notification.error(e.message || t('error.msg.default'))
     }
 }
 

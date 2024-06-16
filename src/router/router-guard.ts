@@ -1,7 +1,7 @@
-import { ElNotification } from 'element-plus'
 import type { NavigationGuardNext, Router } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePermissionStore } from '@/stores/permission'
+import { notification } from '@/utils'
 
 const whiteList = ['/login', '/404', '/401']
 
@@ -34,11 +34,7 @@ async function handleLoginRoute(userStore: ReturnType<typeof useUserStore>, from
     try {
         await userStore.storeGetUserInfo()
         await getPermission()
-        ElNotification({
-            title: '系统提示',
-            message: '您已经登录了',
-            type: 'warning',
-        })
+        notification.warning('您已经登录了')
         next(from.fullPath)
     }
     catch {
