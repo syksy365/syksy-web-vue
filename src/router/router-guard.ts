@@ -46,9 +46,7 @@ async function handleUnauthorizedRoute(userStore: ReturnType<typeof useUserStore
     try {
         await userStore.storeGetUserInfo()
         await getPermission()
-        console.log('to', to)
-        // debugger
-        // next({...to, replace: true})
+        // 这里之所以要to.fullPath是因为第一次进入会匹配进入404
         next(to.fullPath)
     }
     catch {

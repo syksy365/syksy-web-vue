@@ -3,7 +3,7 @@ import { request } from '@/utils/request'
 
 /** 验证码状态 */
 function getCaptchaStatus() {
-    return request<Response<Models.CaptchaStatusResponse>>({
+    return request<ResponseData<Models.CaptchaStatusResponse>>({
         url: '/captcha/status',
         method: 'get',
     })
@@ -20,7 +20,7 @@ function login(data: Models.LoginParams) {
 
 // 获取用户信息
 function getUserInfo() {
-    return request<Response<Models.UserInfo>>({
+    return request<ResponseData<Models.UserInfo>>({
         url: '/upms/user/current',
         method: 'get',
     })

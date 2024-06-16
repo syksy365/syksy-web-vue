@@ -6,15 +6,12 @@ import { getPermissionList } from '@/api/permission'
 import router from '@/router'
 
 const allViews = import.meta.glob('./../../views/**/*.vue')
-console.log(allViews)
 const useAllView = Object.entries(allViews).map(([key, value]) => {
     return {
         key: key.split('/views/')[1].split('.vue')[0],
         value,
     }
 })
-
-console.log('useAllView', useAllView)
 
 export interface SidebarItem {
     name: string
@@ -45,7 +42,6 @@ export const usePermissionStore = defineStore('permission', () => {
                 permission_list_r.value = res.data
                 have_permission_r.value = true
                 use_sidebar_r.value.push(...generateSidebar(cloneDeep(res.data)))
-                console.log('use_sidebar_r', use_sidebar_r.value)
                 resolve(res.data)
             }).catch((err) => {
                 reject(err)

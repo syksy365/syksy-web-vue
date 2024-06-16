@@ -5,11 +5,6 @@ import { type SidebarItem, usePermissionStore } from '@/stores/permission'
 const route = useRoute()
 const router = useRouter()
 const permissionStore = usePermissionStore()
-console.log({
-    route,
-    router,
-})
-
 function gotoRouter(child: SidebarItem) {
     if (!child.isRoute)
         return

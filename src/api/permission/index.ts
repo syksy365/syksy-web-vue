@@ -4,7 +4,7 @@ import type * as Models from './models'
 import { request } from '@/utils'
 
 export function getPermissionList() {
-    return request<Response<Models.PermissionList>>({
+    return request<ResponseData<Models.PermissionList>>({
         url: '/upms/menu/current',
         method: 'get',
     })
